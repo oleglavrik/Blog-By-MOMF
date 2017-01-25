@@ -1,0 +1,19 @@
+{
+    "name": "simple/mvc",
+    "description": "Simple MVC application",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "oleh lavryk",
+            "email": "oleh.lavrik@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload" : {
+        "psr-4" : {
+            "" : "\\"
+        }
+    }
+}

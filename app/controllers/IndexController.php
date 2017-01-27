@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use vendor\core\Controller;
-use vendor\core\Model;
 use app\models\User;
 
 class IndexController extends Controller
@@ -13,14 +12,12 @@ class IndexController extends Controller
         $users = new User();
         $users = $users->getUsers();
 
-        $this->render(
-            'index',
-            array('users' => $users)
-        );
+        echo $this->twig->render('index/index.twig');
     }
 
     public function articleAction()
     {
-        $this->render('article');
+        echo $this->twig->render('index/article.twig');
     }
+
 }

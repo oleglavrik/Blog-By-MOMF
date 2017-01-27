@@ -10,7 +10,9 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "twig/twig": "~2.0"
+    },
     "autoload" : {
         "psr-4" : {
             "" : "\\"

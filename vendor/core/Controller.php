@@ -2,26 +2,20 @@
 
 namespace vendor\core;
 
+define('VIEW_DIR', realpath(__DIR__ . '/../../app/views') . '/');
+
 class Controller
 {
-    private $calledClass;
+    public $twig;
 
     public function __construct()
     {
-        $path = get_class($this);
-        $this->called_class = str_replace('controller', '', substr(strrchr(strtolower($path), "\\"), 1));
+        $loader = new \Twig_Loader_Filesystem(VIEW_DIR);
+        $this->twig = new \Twig_Environment($loader);
     }
 
-
-    public function render($view, $attributes = null)
+    public function error404()
     {
-        if(is_object($attributes)){
-            $attributes = $attributes->fields;
-        }
-        try{
-            (new View)->getView(isset($this->layout)?$this->layout:null)->render($this->called_class, $view, $attributes);
-        } catch(\Exception $e){
-            (new View)->getView('layout')->render('service', '404', $attributes);
-        }
     }
+
 }

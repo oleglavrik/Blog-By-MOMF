@@ -48,11 +48,10 @@ class Router
                 $segments = explode('/', $internalRoute);
 
                 // get controller name / Example: app\controllers\IndexController
-                $controllerName = 'app\controllers\\' . ucfirst(array_shift($segments) . 'Controller');
+                $controllerName = self::CONTROLLERS_PATHWAY . ucfirst(array_shift($segments) . 'Controller');
 
                 // get action name / Example: indexAction
                 $actionName = array_shift($segments) . 'Action';
-
 
                 // get parameters
                 $parameters = $segments;
@@ -76,5 +75,14 @@ class Router
             }
 
         }
+        // if route not found, run page 404 not found
+        if(!$routeStatus) {
+            $defaultController = new DefaultController();
+            $defaultController->error404Action();
+        }
+
     }
+
 }
+
+

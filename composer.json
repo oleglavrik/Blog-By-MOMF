@@ -1,7 +1,7 @@
 {
-    "name": "simple/mvc",
-    "description": "Simple MVC application",
-    "type": "project",
+    "name": "MOMF",
+    "description": "My own mini framework",
+    "type": "web-project",
     "license": "MIT",
     "authors": [
         {

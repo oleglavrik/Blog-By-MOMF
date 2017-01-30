@@ -22,12 +22,11 @@ class DataBase
         $this->password = $config['password'];
         $this->dsn = 'mysql:host=' . $config['host'] . ';dbname=' . $config['dbname'];
 
-        array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION);
-
         try {
             $this->database = new \PDO($this->dsn, $this->username, $this->password);
-        }catch (\PDOException $exception) {
-            $this->errors = $exception;
+            $this->database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        }catch (\PDOException $e) {
+            exit($e->getMessage());
         }
     }
 

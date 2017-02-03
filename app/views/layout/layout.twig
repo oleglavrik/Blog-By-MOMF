@@ -40,7 +40,7 @@
                             <span class="sr-only">Toggle navigation</span>
                             Menu <i class="fa fa-bars"></i>
                         </button>
-                        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+                        <a class="navbar-brand" href="index.html">{% block logo_text %} MOMF {% endblock %}</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -68,17 +68,18 @@
 
         <!-- Page Header -->
         <!-- Set your background image for this header on the line below. -->
+
         {% block header_bg %}
-            <header class="intro-header simple_post_bg" style="">
+            <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                             <div class="site-heading">
-                                <h1>{% block header_title %}Clean Blog{% endblock header_title %}</h1>
+                                <h1>{% block header_title %}MOMF blog{% endblock header_title %}</h1>
                                 <hr class="small">
                                 <span class="subheading">
                                     {% block header_description %}
-                                    A Clean Blog Theme by Start Bootstrap
+                                        My own mini framework
                                     {% endblock header_description %}
                                 </span>
                             </div>

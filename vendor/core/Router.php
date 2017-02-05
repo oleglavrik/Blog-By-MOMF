@@ -37,17 +37,16 @@ class Router
         $uri = $this->getURI();
 
         // current route status
-        $routeStatus = null;
+        $routeStatus = false;
 
         foreach ($this->routes as $uriPattern => $path) {
 
-            if(preg_match("~$uriPattern~", $uri)) {
+            if(preg_match("#^$uriPattern$#", $uri)) {
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
-
                 // get segments
                 $segments = explode('/', $internalRoute);
 
-                // get controller name / Example: app\controllers\IndexController
+                // get controller name Example: app\controllers\IndexController
                 $controllerName = self::CONTROLLERS_PATHWAY . ucfirst(array_shift($segments) . 'Controller');
 
                 // get action name / Example: indexAction
@@ -59,22 +58,17 @@ class Router
                 // create controller obj
                 $controllerObject = new $controllerName;
 
-                try {
-                    if($result = call_user_func_array(array($controllerObject, $actionName), $parameters))
-                        $routeStatus = true;
-                    else
-                        throw new \Exception('Route not found!');
-                } catch (\Exception $e) {
-                    echo $e->getMessage();
-                }
+                // run method
+                $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
 
-                // if route found, break it
+                // if route found, break foreach
                 if($result != null){
+                    $routeStatus = true;
                     break;
                 }
             }
-
         }
+
         // if route not found, run page 404 not found
         if(!$routeStatus) {
             $defaultController = new DefaultController();

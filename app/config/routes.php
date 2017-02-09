@@ -1,10 +1,8 @@
 <?php
 
 return [
-
-    // show simple post
-    'post/show/([0-9]+)' => 'index/show/$1',
-
+    'post/show/([0-9]+)' => 'index/show/$1', // show simple post
+    '__ajax__' => 'index/ajax', // service route for ajax load content
     '/' => 'index/index', // must be down
 ];
 

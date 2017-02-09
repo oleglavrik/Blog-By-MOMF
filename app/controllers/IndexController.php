@@ -12,7 +12,7 @@ class IndexController extends Controller
     {
         // get posts
         $posts = new Posts();
-        $posts = $posts->get();
+        $posts = $posts->getPosts();
 
 
         echo $this->twig->render(
@@ -25,23 +25,11 @@ class IndexController extends Controller
         return true;
     }
 
-    public function getContentArr($string) {
-        $arr = [];
-
-        foreach (explode("\n", $string) as $line) {
-            if (trim($line)) {
-                $arr[] += $arr[$line]  ;
-            }
-        }
-
-        return $arr;
-    }
-
-    public function showAction($id) {
-
-        $post = new Post();
+    public function showAction($id)
+    {
+        // get post by id
+        $post = new Posts();
         $post = $post->getPostByID($id);
-
 
         echo $this->twig->render(
             'index/show.twig',
@@ -53,7 +41,41 @@ class IndexController extends Controller
         return true;
     }
 
-    public function addAction(){
+    public function addAction()
+    {
         // todo if implement addAction need use PDO->transactions in model
+    }
+
+    public function ajaxAction()
+    {
+        $page = (int)$_POST["page"];
+
+        // get posts
+        $posts = new Posts();
+        $posts = $posts->getPosts($page);
+
+        if (!empty($posts))
+            foreach ($posts as $post) {
+                $date = date('l d, Y', strtotime($post['createdAt']));
+                echo <<<TEXT
+            <div class="post-preview">
+                <a href="/post/show/$post[id]">
+                    <h2 class="post-title">
+                        $post[title]
+                    </h2>
+                    <h3 class="post-subtitle">
+                        $post[description]
+                    </h3>
+                </a>
+                <p class="post-meta">Posted by <a href="#">$post[author]</a> on $date </p>
+            </div>
+            <hr>
+TEXT;
+
+            }
+        else
+            echo null;
+
+        return true;
     }
 }

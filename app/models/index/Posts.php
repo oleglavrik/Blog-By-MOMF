@@ -23,6 +23,12 @@ class Posts extends BaseModel
             id = :id
     ';
 
+    const SQL_INSERT_POST = '
+        INSERT 
+            INTO post (title, description, content, createdAt, updatedAt, author)
+        VALUES(:title, :description, :content, :createdAt, :updatedAt, :author)
+    ';
+
     /**
      * @return array
      */
@@ -69,5 +75,24 @@ class Posts extends BaseModel
         } catch (\PDOException $e) {
             echo($e->getMessage());
         }
+    }
+
+    /**
+     * @param array $data
+     */
+    public function addPost(array $data){
+        try {
+            $dbh = $this->db->prepare(self::SQL_INSERT_POST);
+            $dbh->bindValue(':title', $data['title'], \PDO::PARAM_STR);
+            $dbh->bindValue(':description', $data['description'], \PDO::PARAM_STR);
+            $dbh->bindValue(':content', $data['content'], \PDO::PARAM_STR);
+            $dbh->bindValue(':author', $data['author'], \PDO::PARAM_STR);
+            $dbh->bindValue(':createdAt', $data['createdAt'], \PDO::PARAM_STR);
+            $dbh->bindValue(':updatedAt', $data['updatedAt'], \PDO::PARAM_STR);
+            $dbh->execute();
+        } catch (\PDOException $e) {
+            echo($e->getMessage());
+        }
+
     }
 }

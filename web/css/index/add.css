@@ -1,0 +1,10 @@
+#add-new-post-form small {
+    font-size: 12px;
+    line-height: 16px;
+    margin: 2px 0 0 0;
+    color: #761c19;
+}
+
+#add-new-post-form label span {
+    color: #761c19;
+}

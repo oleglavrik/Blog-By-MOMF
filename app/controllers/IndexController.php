@@ -2,9 +2,9 @@
 
 namespace app\controllers;
 
-use app\models\index\Post;
 use app\models\index\Posts;
 use vendor\core\Controller;
+use vendor\valitron\src\Valitron;
 
 class IndexController extends Controller
 {
@@ -43,7 +43,55 @@ class IndexController extends Controller
 
     public function addAction()
     {
-        // todo if implement addAction need use PDO->transactions in model
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // validator for add new post form
+            $validator = new Valitron\Validator($_POST);
+            $rules = [
+                'required' => [
+                    ['title'],
+                    ['description'],
+                    ['content'],
+                    ['author']
+                ],
+                'lengthMin' => [
+                    ['title', 5],
+                ]
+            ];
+            $validator->rules($rules);
+
+            if($validator->validate()){
+                // get data
+                $data['title'] = $_POST['title'];
+                $data['description'] = $_POST['description'];
+                $data['content'] = $_POST['content'];
+                $data['author'] = $_POST['author'];
+                $data['createdAt'] = date('Y-m-d H:i:s');
+                $data['updatedAt'] = date('Y-m-d H:i:s');
+
+                //insert new post
+                $post = new Posts();
+                $post->addPost($data);
+
+                // redirect to home
+                $this->redirectToRoute('/');
+            }else {
+
+                echo $this->twig->render(
+                    'index/add.twig',
+                    [
+                        'errors' => $validator->errors()
+                    ]
+                );
+
+                return true;
+            }
+        }
+
+        echo $this->twig->render(
+            'index/add.twig'
+        );
+
+        return true;
     }
 
     public function ajaxAction()

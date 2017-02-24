@@ -18,4 +18,9 @@ class Controller
     {
     }
 
+    public function redirectToRoute($route, $statusCode = 303){
+        header('Location: ' . $route, true, $statusCode);
+        die();
+    }
+
 }

@@ -2,7 +2,7 @@
 
 namespace vendor\core;
 
-use app\controllers\DefaultController;
+use app\controllers\IndexController;
 use vendor\core\Config;
 
 class Router
@@ -15,11 +15,6 @@ class Router
         $this->routes = Config::get('routes');
     }
 
-    /**
-     * return request query
-     *
-     * @return string
-     */
     private function getURI(){
         if(!empty($_SERVER['REQUEST_URI'])){
             $uri = trim($_SERVER['REQUEST_URI'], '/');
@@ -40,7 +35,6 @@ class Router
         $routeStatus = false;
 
         foreach ($this->routes as $uriPattern => $path) {
-
             if(preg_match("#^$uriPattern$#", $uri)) {
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
                 // get segments
@@ -69,10 +63,10 @@ class Router
             }
         }
 
-        // if route not found, run page 404 not found
+        // if route not found, run page, 404 not found
         if(!$routeStatus) {
-            $defaultController = new DefaultController();
-            $defaultController->error404Action();
+            $defaultController = new IndexController();
+            $defaultController->error404();
         }
 
     }

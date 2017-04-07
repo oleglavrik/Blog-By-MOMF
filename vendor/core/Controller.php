@@ -2,20 +2,24 @@
 
 namespace vendor\core;
 
-define('VIEW_DIR', realpath(__DIR__ . '/../../app/views') . '/');
+use vendor\core\Interfaces\IController;
 
-class Controller
+class Controller implements IController
 {
-    public $twig;
+    protected $twig;
+
+    const VIEW_DIR = __DIR__ . '/../../app/views';
 
     public function __construct()
     {
-        $loader = new \Twig_Loader_Filesystem(VIEW_DIR);
+        $loader = new \Twig_Loader_Filesystem(self::VIEW_DIR);
         $this->twig = new \Twig_Environment($loader);
     }
 
-    public function error404()
-    {
+    public function error404() {
+        echo $this->twig->render('exception/error404.twig');
+
+        return true;
     }
 
     public function redirectToRoute($route, $statusCode = 303){

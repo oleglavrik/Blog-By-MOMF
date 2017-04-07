@@ -42,5 +42,4 @@ class DataBase
 
     private function __wakeup(){} // prevent unserialization
 
-
 }

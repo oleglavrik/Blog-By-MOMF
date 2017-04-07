@@ -1,0 +1,55 @@
+{% extends "layout/auth_layout.twig" %}
+
+{% block content %}
+
+    <div id="wrapper">
+        <div id="register" class="animate form">
+            <form  action="/registration" autocomplete="on" method="post">
+                <h1> Sign up </h1>
+                <div>
+                    <label for="usernamesignup" class="uname" >Your username <span>*</span></label>
+                    <input id="usernamesignup" name="username" type="text" placeholder="super username" />
+                    {% if errors.username is not empty %}
+                        {% for error in errors.username %}
+                            <div>
+                                <small class="help-block">
+                                    {{ error }}
+                                </small>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="passwordsignup" class="youpasswd" >Your password <span>*</span></label>
+                    <input id="passwordsignup" name="password" type="password" placeholder="******"/>
+                    {% if errors.password is not empty %}
+                        {% for error in errors.password %}
+                            <div>
+                                <small class="help-block">
+                                    {{ error }}
+                                </small>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="passwordsignup_confirm" class="youpasswd" >Please confirm your password <span>*</span></label>
+                    <input id="passwordsignup_confirm" name="password_confirm" type="password" placeholder="******"/>
+                    {% if errors.password_confirm is not empty %}
+                        {% for error in errors.password_confirm %}
+                            <div>
+                                <small class="help-block">
+                                    {{ error }}
+                                </small>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <p class="signin button">
+                    <input type="submit" value="Sign up"/>
+                </p>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

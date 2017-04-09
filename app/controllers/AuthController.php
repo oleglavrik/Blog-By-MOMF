@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use vendor\core\Controller;
+use vendor\core\FlashMessages;
 use vendor\valitron\src\Valitron;
 use app\models\auth\Auth;
 
@@ -43,6 +44,10 @@ class AuthController extends Controller
                 $auth = new Auth();
                 $auth->registerUser($data);
 
+                // create message
+                $message = new FlashMessages();
+                $message->setMessage('User successfully added!', 'success');
+
                 // redirect to home
                 $this->redirectToRoute('/'); // todo change if it need
             }else {
@@ -63,6 +68,10 @@ class AuthController extends Controller
         );
 
         return true; // must be to stopping find the route
+
+    }
+
+    public function checkUserName() {
 
     }
 }

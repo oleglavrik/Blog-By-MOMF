@@ -3,6 +3,7 @@
 namespace vendor\core;
 
 use vendor\core\Interfaces\IController;
+use vendor\core\FlashMessages;
 
 class Controller implements IController
 {
@@ -12,8 +13,11 @@ class Controller implements IController
 
     public function __construct()
     {
+        // init twig
         $loader = new \Twig_Loader_Filesystem(self::VIEW_DIR);
         $this->twig = new \Twig_Environment($loader);
+        // add show messages extension
+        $this->twig->addExtension(new FlashMessages());
     }
 
     public function error404() {

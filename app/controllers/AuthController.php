@@ -46,7 +46,7 @@ class AuthController extends Controller
 
                 // create message
                 $message = new FlashMessages();
-                $message->setMessage('User successfully added!', 'success');
+                $message->setMessage('User successfully added.', 'success');
 
                 // redirect to home
                 $this->redirectToRoute('/'); // todo change if it need

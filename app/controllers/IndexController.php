@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\index\Posts;
 use vendor\core\Controller;
+use vendor\core\FlashMessages;
 use vendor\valitron\src\Valitron;
 
 class IndexController extends Controller
@@ -68,13 +69,20 @@ class IndexController extends Controller
                 $data['createdAt'] = date('Y-m-d H:i:s');
                 $data['updatedAt'] = date('Y-m-d H:i:s');
 
-                //insert new post
+                // insert new post
                 $post = new Posts();
                 $post->addPost($data);
+
+                // set success message
+                $message = new FlashMessages();
+                $message->setMessage('Post successfully added.', 'success');
 
                 // redirect to home
                 $this->redirectToRoute('/');
             }else {
+                // set error message
+                $message = new FlashMessages();
+                $message->setMessage('Oops something wrong.', 'danger');
 
                 echo $this->twig->render(
                     'index/add.twig',

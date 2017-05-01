@@ -35,21 +35,38 @@ class AuthController extends Controller
             $validator->rules($rules);
 
             if($validator->validate()) {
-                // get data
-                $data['username'] = $_POST['username'];
-                $data['password'] = md5($_POST['password']);
-                $data['joined'] = date('Y-m-d H:i:s');
+                if($this->checkUsername($_POST['username'])) {
+                    // get data
+                    $data['username'] = $_POST['username'];
+                    $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                    $data['joined'] = date('Y-m-d H:i:s');
 
-                // register user
-                $auth = new Auth();
-                $auth->registerUser($data);
+                    // register user
+                    $authModel = new Auth();
+                    $authModel->registerUser($data);
 
-                // create message
-                $message = new FlashMessages();
-                $message->setMessage('User successfully added.', 'success');
+                    // create message
+                    $message = new FlashMessages();
+                    $message->setMessage('User successfully added.', 'success');
 
-                // redirect to home
-                $this->redirectToRoute('/'); // todo change if it need
+                    // redirect to home
+                    $this->redirectToRoute('/'); // todo change if it need
+                }else {
+                    // set validation error username is already exist
+                    $errorMessage = "This username " . "\"" . $_POST['username'] . "\"" . " is already exist, username must be unique";
+                    $validator->error('username', $errorMessage);
+
+                    echo $this->twig->render(
+                        'auth/registration.twig',
+                        [
+                            'errors' => $validator->errors()
+                        ]
+                    );
+
+                    return true; // must be to stopping find the route
+                }
+
+
             }else {
                 echo $this->twig->render(
                     'auth/registration.twig',
@@ -71,7 +88,15 @@ class AuthController extends Controller
 
     }
 
-    public function checkUserName() {
+    protected function checkUsername($userName) {
+        // model check username in DB
+        $login = new Auth();
+        $login = $login->checkUserName($userName);
 
+        if(empty($login))
+            return true;
+        else
+            return false;
     }
+
 }

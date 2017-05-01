@@ -12,6 +12,16 @@ class Auth extends BaseModel
         VALUES (:username, :password, :joined)
     ';
 
+    const SQL_CHECK_USER_NAME = '
+        SELECT 
+            username FROM users 
+        WHERE username = :username
+            LIMIT 1
+    ';
+
+    /**
+     * @param array $data
+     */
     public function registerUser(array $data) {
         try {
             $dbh = $this->db->prepare(self::SQL_REGISTER_USER);
@@ -19,6 +29,22 @@ class Auth extends BaseModel
             $dbh->bindValue(':password', $data['password'], \PDO::PARAM_STR);
             $dbh->bindValue(':joined', $data['joined'], \PDO::PARAM_STR);
             $dbh->execute();
+        } catch (\PDOException $e) {
+            echo ($e->getMessage());
+        }
+    }
+
+    /**
+     * @param $userName
+     * @return array
+     */
+    public function checkUserName($userName) {
+        try {
+            $dbh = $this->db->prepare(self::SQL_CHECK_USER_NAME);
+            $dbh->bindValue(':username', $userName, \PDO::PARAM_STR);
+            $dbh->execute();
+
+            return $dbh->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             echo ($e->getMessage());
         }

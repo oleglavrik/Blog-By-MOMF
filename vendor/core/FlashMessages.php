@@ -28,12 +28,14 @@ class FlashMessages extends \Twig_Extension
     public function showMessages()
     {
         if (!empty($_SESSION['flash'])) {
-            echo '<div class="alert alert-' . $_SESSION['flash']['status'] . ' alert-dismissable" >';
-            echo '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-            echo '<strong>'. ucfirst($_SESSION['flash']['status']) . '!</strong> ' . $_SESSION['flash']['message'];
-            echo '</div>';
+            $html = '<div class="alert alert-' . $_SESSION['flash']['status'] . ' alert-dismissable" >';
+            $html .= '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+            $html .= '<strong>'. ucfirst($_SESSION['flash']['status']) . '!</strong> ' . $_SESSION['flash']['message'];
+            $html .= '</div>';
+            echo $html;
 
             unset($_SESSION['flash']);
         }
     }
 }
+

@@ -4,7 +4,7 @@ namespace app\models\auth;
 
 use vendor\core\Models\BaseModel;
 
-class Auth extends BaseModel
+class User extends BaseModel
 {
     const SQL_REGISTER_USER = '
         INSERT
@@ -15,6 +15,13 @@ class Auth extends BaseModel
     const SQL_CHECK_USER_NAME = '
         SELECT 
             username FROM users 
+        WHERE username = :username
+            LIMIT 1
+    ';
+
+    const SQL_GET_USER_BY_USERNAME = '
+        SELECT
+            id, username, password, joined FROM users 
         WHERE username = :username
             LIMIT 1
     ';
@@ -38,15 +45,32 @@ class Auth extends BaseModel
      * @param $userName
      * @return array
      */
-    public function checkUserName($userName) {
+    public function checkUserName($username) {
         try {
             $dbh = $this->db->prepare(self::SQL_CHECK_USER_NAME);
-            $dbh->bindValue(':username', $userName, \PDO::PARAM_STR);
+            $dbh->bindValue(':username', $username, \PDO::PARAM_STR);
             $dbh->execute();
 
             return $dbh->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            echo ($e->getMessage());
+            die($e->getMessage()); // need page with exceptions errors
         }
     }
+
+    /**
+     * @param $username
+     * @return mixed
+     */
+    public function getUserByUserName($username) {
+        try {
+            $dbh = $this->db->prepare(self::SQL_GET_USER_BY_USERNAME);
+            $dbh->bindValue(':username', $username, \PDO::PARAM_STR);
+            $dbh->execute();
+
+            return $dbh->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            die($e->getMessage()); // todo create page with exceptions
+        }
+    }
+
 }

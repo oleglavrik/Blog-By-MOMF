@@ -1,0 +1,44 @@
+{% extends "layout/auth_layout.twig" %}
+
+{% block content %}
+    <div id="wrapper" z>
+        <div id="login" class="animate form">
+            <form  action="/auth" autocomplete="on" method="post">
+                <h1>Log in</h1>
+                <div>
+                    <label for="username" class="uname" > Your username </label>
+                    <input id="username" name="username" required="required" type="text" placeholder="Username"/>
+                    {% if errors.username is not empty %}
+                        {% for error in errors.username %}
+                        <div>
+                            <small class="help-block">
+                                {{ error }}
+                            </small>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="password" class="youpasswd"> Your password </label>
+                    <input id="password" name="password" required="required" type="password" placeholder="" />
+                    {% if errors.password is not empty %}
+                        {% for error in errors.password %}
+                            <div>
+                                <small class="help-block">
+                                    {{ error }}
+                                </small>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="keeplogin">
+                    <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />
+                    <label for="loginkeeping">Keep me logged in</label>
+                </div>
+                <div class="login button">
+                    <input type="submit" value="Login" />
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -28,6 +28,7 @@ class User extends BaseModel
 
     /**
      * @param array $data
+     * @return bool
      */
     public function registerUser(array $data) {
         try {
@@ -35,23 +36,30 @@ class User extends BaseModel
             $dbh->bindValue(':username', $data['username'], \PDO::PARAM_STR);
             $dbh->bindValue(':password', $data['password'], \PDO::PARAM_STR);
             $dbh->bindValue(':joined', $data['joined'], \PDO::PARAM_STR);
-            $dbh->execute();
+
+            return $dbh->execute();
         } catch (\PDOException $e) {
             echo ($e->getMessage());
         }
     }
 
     /**
-     * @param $userName
-     * @return array
+     * @param $username
+     * @return bool
      */
     public function checkUserName($username) {
         try {
             $dbh = $this->db->prepare(self::SQL_CHECK_USER_NAME);
+
             $dbh->bindValue(':username', $username, \PDO::PARAM_STR);
             $dbh->execute();
 
-            return $dbh->fetchAll(\PDO::FETCH_ASSOC);
+            $user = $dbh->fetchAll(\PDO::FETCH_ASSOC);
+
+            if(empty($user))
+                return true;
+            else
+                return false;
         } catch (\PDOException $e) {
             die($e->getMessage()); // need page with exceptions errors
         }

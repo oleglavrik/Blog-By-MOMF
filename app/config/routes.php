@@ -1,7 +1,9 @@
 <?php
 
 return [
-    'auth' => 'auth/authorization',
+    'admin' => 'admin/index',
+    'logout' => 'auth/logout',
+    'login' => 'auth/login',
     'registration' => 'auth/registration',
     'post/add' => 'index/add',
     'post/show/([0-9]+)' => 'index/show/$1', // show simple post

@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\index\Posts;
 use vendor\core\Controller;
 use vendor\core\FlashMessages;
+use vendor\core\Request;
 use vendor\valitron\src\Valitron;
 
 class IndexController extends Controller
@@ -14,7 +15,6 @@ class IndexController extends Controller
         // get posts
         $posts = new Posts();
         $posts = $posts->getPosts();
-
 
         echo $this->twig->render(
             'index/index.twig',
@@ -28,6 +28,8 @@ class IndexController extends Controller
 
     public function showAction($id)
     {
+        $this->securityAuth(new Request());
+
         // get post by id
         $post = new Posts();
         $post = $post->getPostByID($id);

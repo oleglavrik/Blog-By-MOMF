@@ -22,6 +22,8 @@ class Controller implements IController
         $this->twig = new \Twig_Environment($loader);
         // add show messages extension
         $this->twig->addExtension(new FlashMessages());
+        // add build navigation extension
+        $this->twig->addExtension(new Navigation());
     }
 
     public function error404() {
@@ -101,6 +103,12 @@ class Controller implements IController
                      */
                     $_SESSION['auth']['hash'] = $userData['hash'];
                     $_SESSION['auth']['user_id'] = $userData['user_id'];
+
+                    // get user name by user id and set in php session
+                    $currentUser = new User();
+                    $currentUser = $currentUser->getUserNameByUserID($userData['user_id']);
+
+                    $_SESSION['auth']['user_name'] = $currentUser['username'];
                 } else {
                     /**
                      * Cookie hash and user session hash are not equal

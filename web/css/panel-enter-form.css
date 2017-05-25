@@ -1,0 +1,25 @@
+#enter-form {
+    padding: 15px 15px 10px 15px;
+    float: right;
+}
+
+.form-control {
+    border-radius: 0;
+    font-size: 12px;
+}
+
+#enter-form button {
+    font-size: 12px;
+    padding: 8px 10px;
+    float: right;
+}
+
+.form-group label {
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.dropdown-menu {
+    margin-top: 1px !important;
+    background: rgba(231, 231, 231, 1) !important;;
+}

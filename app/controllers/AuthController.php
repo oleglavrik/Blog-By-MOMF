@@ -129,6 +129,7 @@ class AuthController extends Controller
                     $_SESSION['auth'] = [
                         'hash' => $guardHash,
                         'user_id' => $userData['id'],
+                        'user_name' => $userData['username']
                     ];
 
                     // create session data

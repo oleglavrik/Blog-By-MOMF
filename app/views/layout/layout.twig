@@ -13,6 +13,8 @@
 
     <!-- Theme CSS -->
     <link href="/css/clean-blog.css" rel="stylesheet">
+    <link href="/css/panel-enter-form.css" rel="stylesheet">
+
 
     {% block font %}
     <!-- Custom Fonts -->
@@ -40,35 +42,13 @@
                             <span class="sr-only">Toggle navigation</span>
                             Menu <i class="fa fa-bars"></i>
                         </button>
-                        <a class="navbar-brand" href="index.html">{% block logo_text %} MOMF {% endblock %}</a>
+                        <a class="navbar-brand" href="/">{% block logo_text %} MOMF {% endblock %}</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="index.html">Home</a>
-                            </li>
-                            <li>
-                                <a href="about.html">About</a>
-                            </li>
-                            <li>
-                                <a href="post.html">Sample Post</a>
-                            </li>
-                            <li>
-                                <a href="contact.html">Contact</a>
-                            </li>
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome, User <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="icon-cog"></i> Preferences</a></li>
-                                    <li><a href="#"><i class="icon-envelope"></i> Contact Support</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-
-
+                        {# display dynamic navigation #}
+                        {{ buildNavigation() }}
                     </div>
                     <!-- /.navbar-collapse -->
                 </div>

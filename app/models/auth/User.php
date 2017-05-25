@@ -26,6 +26,29 @@ class User extends BaseModel
             LIMIT 1
     ';
 
+    const SQL_GET_USER_NAME_BY_USER_ID = '
+        SELECT 
+            username FROM users
+        WHERE id = :id
+            LIMIT 1
+    ';
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getUserNameByUserID($id) {
+        try {
+            $dbh = $this->db->prepare(self::SQL_GET_USER_NAME_BY_USER_ID);
+            $dbh->bindValue(':id', $id, \PDO::PARAM_INT);
+            $dbh->execute();
+
+            return $dbh->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
     /**
      * @param array $data
      * @return bool

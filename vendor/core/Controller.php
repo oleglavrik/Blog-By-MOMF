@@ -26,12 +26,6 @@ class Controller implements IController
         $this->twig->addExtension(new Navigation());
     }
 
-    public function error404() {
-        echo $this->twig->render('exception/error404.twig');
-
-        return true;
-    }
-
     public function redirectToRoute($route, $referrerClear = false, $statusCode = 303){
         if($referrerClear){
             unset($_SESSION['http_referrer']);

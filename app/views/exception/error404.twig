@@ -1,12 +1,25 @@
-{% extends "layout/layout.twig" %}
+{% extends "layout/exception.twig" %}
 {% block title %} Page not found {% endblock %}
 {% block content %}
-    <div class="container text-center">
-        <h1>Page not found</h1>
-
-        <p>
-            The requested page couldn't be located. Checkout for any URL
-            misspelling or <a href="#">return to the homepage</a>.
-        </p>
+    <!--start-wrap--->
+    <div class="wrap">
+        <!---start-header---->
+        <div class="header">
+            <div class="logo">
+                <h1><a href="#">Ohh</a></h1>
+            </div>
+        </div>
+        <!---End-header---->
+        <!--start-content------>
+        <div class="content">
+            <img src="/img/error-img.png" title="error" />
+            <p><span><label>O</label>hh.....</span>You Requested the page that is no longer There.</p>
+            <a href="/">Back To Home</a>
+            <div class="copy-right">
+                <p>&#169 All rights Reserved | Designed by <a href="http://w3layouts.com/">W3Layouts</a></p>
+            </div>
+        </div>
+        <!--End-Cotent------>
     </div>
+    <!--End-wrap--->
 {% endblock %}

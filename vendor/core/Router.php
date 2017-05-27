@@ -33,6 +33,8 @@ class Router
         $uri = $this->getURI();
 
         try {
+            $exception404 = true;
+
             foreach ($this->routes as $uriPattern => $path) {
                 if(preg_match("#^$uriPattern$#", $uri)) {
                     $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
@@ -56,13 +58,16 @@ class Router
 
                     // if route found, break foreach
                     if($result != null){
-                        //$routeStatus = true;
+                        $exception404 = false;
                         break;
                     }
                 }
             }
 
-            throw new \Exception('Page not found!');
+            if($exception404) {
+                throw new \Exception();
+            }
+
         } catch (\Exception $e) {
             $exceptionController = new ExceptionController();
             $exceptionController->error404();

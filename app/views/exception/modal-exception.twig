@@ -1,5 +1,5 @@
 {% extends "layout/exception.twig" %}
-{% block title %} Page not found {% endblock %}
+{% block title %} Exception {% endblock %}
     {% block css %}
         <link href="/css/404-exception.css" rel="stylesheet" type="text/css"  media="all" />
     {% endblock %}
@@ -9,14 +9,19 @@
         <!---start-header---->
         <div class="header">
             <div class="logo">
-                <h1><a href="#">Ohh</a></h1>
+                <h1><a href="/">Exception occurred!</a></h1>
             </div>
         </div>
         <!---End-header---->
         <!--start-content------>
         <div class="content">
-            <img src="/img/error-img.png" title="error" />
-            <p><span><label>O</label>hh.....</span>You Requested the page that is no longer There.</p>
+            <p>
+                <span>
+                    <label>O</label>hh..... Something wrong with MOMF blog, we try to fix it.
+                </span>
+
+            </p>
+            <p>{{ errorMessage }}</p>
             <a href="/">Back To Home</a>
             <div class="copy-right">
                 <p>&#169 All rights Reserved | Designed by <a href="http://w3layouts.com/">W3Layouts</a></p>

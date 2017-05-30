@@ -3,6 +3,7 @@
 namespace app\models\auth;
 
 use vendor\core\Models\BaseModel;
+use app\controllers\ExceptionController;
 
 class User extends BaseModel
 {
@@ -45,7 +46,8 @@ class User extends BaseModel
 
             return $dbh->fetch(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -62,7 +64,8 @@ class User extends BaseModel
 
             return $dbh->execute();
         } catch (\PDOException $e) {
-            echo ($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -84,7 +87,8 @@ class User extends BaseModel
             else
                 return false;
         } catch (\PDOException $e) {
-            die($e->getMessage()); // need page with exceptions errors
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -100,7 +104,8 @@ class User extends BaseModel
 
             return $dbh->fetch(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            die($e->getMessage()); // todo create page with exceptions
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 

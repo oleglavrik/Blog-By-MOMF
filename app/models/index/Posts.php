@@ -1,6 +1,7 @@
 <?php
 namespace app\models\index;
 
+use app\controllers\ExceptionController;
 use vendor\core\Config;
 use vendor\core\Models\BaseModel;
 
@@ -49,7 +50,8 @@ class Posts extends BaseModel
                 return $dbh->fetchAll(\PDO::FETCH_ASSOC);
             }
         } catch (\PDOException $e) {
-            echo($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -73,7 +75,8 @@ class Posts extends BaseModel
                 return $post;
             }
         } catch (\PDOException $e) {
-            echo($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -91,7 +94,8 @@ class Posts extends BaseModel
             $dbh->bindValue(':updatedAt', $data['updatedAt'], \PDO::PARAM_STR);
             $dbh->execute();
         } catch (\PDOException $e) {
-            echo($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
 
     }

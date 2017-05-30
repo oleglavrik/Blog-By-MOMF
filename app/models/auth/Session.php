@@ -3,6 +3,7 @@
 namespace app\models\auth;
 
 use vendor\core\Models\BaseModel;
+use app\controllers\ExceptionController;
 
 class Session extends BaseModel
 {
@@ -62,7 +63,8 @@ class Session extends BaseModel
 
             return $dbh->execute();
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -74,7 +76,8 @@ class Session extends BaseModel
 
             return $dbh->fetchAll(\PDO::FETCH_ASSOC)['0'];
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -85,7 +88,8 @@ class Session extends BaseModel
 
             return $dbh->execute();
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -97,7 +101,8 @@ class Session extends BaseModel
 
             return $dbh->fetchAll(\PDO::FETCH_ASSOC)['0'];
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -113,7 +118,8 @@ class Session extends BaseModel
 
             return $dbh->fetchAll(\PDO::FETCH_ASSOC)['0'];
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 
@@ -124,7 +130,8 @@ class Session extends BaseModel
 
             return $dbh->execute();
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 }

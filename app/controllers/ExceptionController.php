@@ -11,4 +11,13 @@ class ExceptionController extends Controller
 
         return true;
     }
+
+    public function modelException($errorMessage) {
+        echo $this->twig->render(
+            'exception/modal-exception.twig',
+            ['errorMessage' => $errorMessage]
+        );
+
+        die();
+    }
 }

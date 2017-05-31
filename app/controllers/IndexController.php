@@ -8,7 +8,6 @@ use vendor\core\Controller;
 use vendor\core\FlashMessages;
 use vendor\core\Navigation;
 use vendor\core\Request;
-use vendor\valitron\src\Valitron;
 
 class IndexController extends Controller
 {
@@ -30,8 +29,6 @@ class IndexController extends Controller
 
     public function showAction($id)
     {
-        $this->securityAuth(new Request());
-
         // get post by id
         $post = new Posts();
         $post = $post->getPostByID($id);
@@ -50,7 +47,7 @@ class IndexController extends Controller
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             // validator for add new post form
-            $validator = new Valitron\Validator($_POST);
+            $validator = new \Valitron\Validator($_POST);
             $rules = [
                 'required' => [
                     ['title'],

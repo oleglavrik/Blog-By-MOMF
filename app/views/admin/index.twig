@@ -1,14 +1,61 @@
-{% extends "layout/layout.twig" %}
+{% extends "layout/admin.twig" %}
 
 {% block title %} MOMF blog | Recent articles {% endblock %}
+
+{% block css %}
+    <!-- Bootstrap Core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="/css/clean-blog.css" rel="stylesheet">
+    <link href="/css/admin-side.css" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
     <!-- Main Content -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" >
+            <div class="col-lg-12" id="content">
                 <div id="content-wrapper">
-                    Administration side MOMF
+                    <h1 class="text-center">Administration side MOMF</h1>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">All Posts</div>
+                        <div class="panel-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>CreatedAt</th>
+                                    <th class="text-center">Action</th>
+                                </thead>
+                                <tbody>
+                                    {% for post in posts %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ post.title }}</td>
+                                            <td>{{ post.author }}</td>
+                                            <td>{{ post.createdAt }}</td>
+                                            <td class="text-center">
+                                                <!-- Split button -->
+                                                <!-- Small button group -->
+                                                <div class="btn-group">
+                                                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Actions <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#">Edit</a></li>
+                                                        <li><a href="#">Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

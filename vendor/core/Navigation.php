@@ -9,6 +9,7 @@ class Navigation extends \Twig_Extension
     {
         return array(
             new \Twig_Function('buildNavigation', [$this, 'buildNavigation']),
+            new \Twig_Function('buildNavigationAdmin', [$this, 'buildNavigationAdmin']),
         );
     }
 
@@ -40,7 +41,7 @@ class Navigation extends \Twig_Extension
                     <li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
                 </ul>
             </li>';
-        
+
         }else {
             $html .= '
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome, Guest <b class="caret"></b></a>
@@ -58,6 +59,28 @@ class Navigation extends \Twig_Extension
                 </form>
                 </div>
             </li>';
+        }
+
+        $html .= '</ul>';
+
+        echo $html;
+    }
+
+    public function buildNavigationAdmin(){
+        $html = '<ul class="nav navbar-nav navbar-right">';
+
+        foreach (Config::get('navigation-admin') as $key => $value) {
+            $html .= '<li><a href='. $value .'>' . $key . '</a>';
+
+            if (is_array($value)) {
+                $html .= '<ul>';
+                foreach ($value as $subkey => $subvalue) {
+                    $html .= '<li><a href='. $subvalue .'>' . $subkey . '</a></li>\n\t\t\t\t\t\t\t\t';
+                }
+                $html .= '</ul>';
+            }
+
+            $html .= "</li>\n\t\t\t\t\t\t\t";
         }
 
         $html .= '</ul>';

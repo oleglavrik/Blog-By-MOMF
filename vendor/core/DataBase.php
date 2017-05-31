@@ -3,6 +3,7 @@
 namespace vendor\core;
 
 use vendor\core\Config;
+use app\controllers\ExceptionController;
 
 class DataBase
 {
@@ -26,7 +27,8 @@ class DataBase
             $this->database = new \PDO($this->dsn, $this->username, $this->password);
             $this->database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }catch (\PDOException $e) {
-            exit($e->getMessage());
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
         }
     }
 

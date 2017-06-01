@@ -1,0 +1,81 @@
+{% extends "layout/admin.twig" %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/index/add.css">
+{% endblock  %}
+
+{% block title %} MOMF blog | Add new post {% endblock %}
+
+{% block content %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6" id="content">
+                <div id="content-wrapper">
+                    <h1 class="text-center">Add new post</h1>
+                    {{ showMessages() }}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Would you like edit the post ?
+                        </div>
+                        <div class="panel-body">
+                            <form method="post" action="/post/add" id="add-new-post-form">
+                                <div class="form-group">
+                                    <label for="title">Title <span>*</span></label>
+                                    <input type="text" id="title" class="form-control" name="title" placeholder="Title">
+                                    {% if errors.title is not empty %}
+                                        {% for error in errors.title  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description <span>*</span></label>
+                                    <input type="text" class="form-control" id="description" name="description" placeholder="Desciption">
+                                    {% if errors.description is not empty %}
+                                        {% for error in errors.description  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Content <span>*</span></label>
+                                    <textarea class="form-control" name="content"></textarea>
+                                    {% if errors.content is not empty %}
+                                        {% for error in errors.content  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Author <span>*</span></label>
+                                    <input type="text" class="form-control" id="author" name="author" placeholder="Author">
+                                    {% if errors.author is not empty %}
+                                        {% for error in errors.author  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="pull-right">
+                                    <input class="btn btn-default" type="submit" name="cancel " value="Cancel" />
+                                    <input class="btn btn-success" type="submit" name="post-add" value="Add post" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

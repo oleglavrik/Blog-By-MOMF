@@ -97,7 +97,8 @@ class Posts extends BaseModel
             $dbh->bindValue(':author', $data['author'], \PDO::PARAM_STR);
             $dbh->bindValue(':createdAt', $data['createdAt'], \PDO::PARAM_STR);
             $dbh->bindValue(':updatedAt', $data['updatedAt'], \PDO::PARAM_STR);
-            $dbh->execute();
+
+            return $dbh->execute();
         } catch (\PDOException $e) {
             $exceptionController = new ExceptionController();
             $exceptionController->modelException($e->getMessage());
@@ -105,6 +106,10 @@ class Posts extends BaseModel
 
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function deletePost($id) {
         try {
             $dbh = $this->db->prepare(self::SQL_DELETE_POST_BY_ID);
@@ -112,6 +117,31 @@ class Posts extends BaseModel
 
             return $dbh->execute();
         }catch (\PDOException $e) {
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
+        }
+    }
+
+    const SQL_UPDATE_POST_BY_ID = '
+        UPDATE post
+            SET title = :title, description = :description, content = :content, author = :author, createdAt = :createdAt, updatedAt = :updatedAt   
+        WHERE id = :id   
+    ';
+
+    public function updatePost(array $data) {
+
+        try {
+            $dbh = $this->db->prepare(self::SQL_UPDATE_POST_BY_ID);
+            $dbh->bindValue(':id', $data['id'], \PDO::PARAM_INT);
+            $dbh->bindValue(':title', $data['title'], \PDO::PARAM_STR);
+            $dbh->bindValue(':description', $data['description'], \PDO::PARAM_STR);
+            $dbh->bindValue(':content', $data['content'], \PDO::PARAM_STR);
+            $dbh->bindValue(':author', $data['author'], \PDO::PARAM_STR);
+            $dbh->bindValue(':createdAt', $data['createdAt'], \PDO::PARAM_STR);
+            $dbh->bindValue(':updatedAt', $data['updatedAt'], \PDO::PARAM_STR);
+
+            return $dbh->execute();
+        } catch (\PDOException $e) {
             $exceptionController = new ExceptionController();
             $exceptionController->modelException($e->getMessage());
         }

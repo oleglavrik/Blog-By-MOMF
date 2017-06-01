@@ -3,5 +3,5 @@
         'home' => '/',
         'about' => '#',
         'sample post' => '#',
-        'contact' => '#'
+        'administration' => '/admin'
     ];

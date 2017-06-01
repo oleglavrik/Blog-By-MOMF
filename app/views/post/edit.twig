@@ -1,0 +1,109 @@
+{% extends "layout/admin.twig" %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/index/edit.css">
+{% endblock  %}
+
+{% block title %} MOMF blog | Edit post {% endblock %}
+
+{% block content %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7" id="content">
+                <div id="content-wrapper">
+                    <h1 class="text-center">Edit post</h1>
+                    {{ showMessages() }}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Would you like edit the post ?
+                        </div>
+                        <div class="panel-body">
+                            <form method="post" action="/post/edit/{{ post.id }}" id="edit-post-form">
+                                <input type="text" hidden="hidden" name="id" value="{{ post.id }}">
+                                <div class="form-group">
+                                    <label for="title">Title <span>*</span></label>
+                                    <input type="text" id="title" class="form-control" name="title" value="{{ post.title }}">
+                                    {% if errors.title is not empty %}
+                                        {% for error in errors.title  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description <span>*</span></label>
+                                    <input type="text" class="form-control" id="description" name="description" value="{{ post.description }}">
+                                    {% if errors.description is not empty %}
+                                        {% for error in errors.description  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Content <span>*</span></label>
+                                    <textarea class="form-control" name="content" cols="60" rows="10">
+                                        {% for item in post.content %}
+                                            {{ item }}
+                                        {% endfor %}
+                                    </textarea>
+                                    {% if errors.content is not empty %}
+                                        {% for error in errors.content  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Author <span>*</span></label>
+                                    <input type="text" class="form-control" id="author" name="author" value="{{ post.author }}">
+                                    {% if errors.author is not empty %}
+                                        {% for error in errors.author  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Created At <span>*</span></label>
+                                    <input type="text" class="form-control" id="createdAt" name="createdAt" value="{{ post.createdAt }}">
+                                    {% if errors.createdAt is not empty %}
+                                        {% for error in errors.createdAt  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Updated At <span>*</span></label>
+                                    <input type="text" class="form-control" id="updatedAt" name="updatedAt" value="{{ post.updatedAt }}">
+                                    {% if errors.updatedAt is not empty %}
+                                        {% for error in errors.updatedAt  %}
+                                            <small class="help-block">
+                                                {{ error }}
+                                            </small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="pull-right">
+                                    <input class="btn btn-default" type="submit" name="cancel " value="Cancel" />
+                                    <input class="btn btn-success" type="submit" name="post-edit" value="Edit" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -46,8 +46,10 @@
                                                         Actions <span class="caret"></span>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a href="#">Edit</a></li>
-                                                        <li><a href="#">Delete</a></li>
+                                                        <li>
+                                                            <a href="/post/edit/{{ post.id }}">Edit</a>
+                                                        </li>
+                                                        <li><a href="/post/delete/{{ post.id }}">Delete</a></li>
                                                     </ul>
                                                 </div>
                                             </td>

@@ -87,7 +87,38 @@ class AdminController extends Controller
         }
 
         echo $this->twig->render(
-            'index/add.twig'
+            'admin/add.twig'
+        );
+
+        return true;
+    }
+
+    public function deleteAction($id) {
+        // security guard
+        $this->securityAuth(new Request());
+
+        // get post
+        $postObj = new Posts();
+        $post = $postObj->getPostByID($id);
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if(isset($_POST['post-delete'])) {
+                if($postObj->deletePost($_POST['postID'])) {
+                    /* Post successfully removed */
+                    $message = new FlashMessages();
+                    $message->setMessage('Post successfully deleted.', 'success');
+
+                    $this->redirectToRoute('/admin');
+                }
+            }else {
+                // cancel, redirect to admin index
+                $this->redirectToRoute('/admin');
+            }
+        }
+
+        echo $this->twig->render(
+            'admin/delete.twig',
+            ['post' => $post]
         );
 
         return true;

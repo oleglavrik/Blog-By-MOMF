@@ -30,6 +30,11 @@ class Posts extends BaseModel
         VALUES(:title, :description, :content, :createdAt, :updatedAt, :author)
     ';
 
+    const SQL_DELETE_POST_BY_ID = '
+        DELETE FROM post
+        WHERE id = :id
+    ';
+
     /**
      * @return array
      */
@@ -98,5 +103,17 @@ class Posts extends BaseModel
             $exceptionController->modelException($e->getMessage());
         }
 
+    }
+
+    public function deletePost($id) {
+        try {
+            $dbh = $this->db->prepare(self::SQL_DELETE_POST_BY_ID);
+            $dbh->bindValue(':id', $id, \PDO::PARAM_INT);
+
+            return $dbh->execute();
+        }catch (\PDOException $e) {
+            $exceptionController = new ExceptionController();
+            $exceptionController->modelException($e->getMessage());
+        }
     }
 }

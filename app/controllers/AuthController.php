@@ -5,7 +5,6 @@ namespace app\controllers;
 use app\models\auth\Session;
 use vendor\core\Controller;
 use vendor\core\FlashMessages;
-use vendor\valitron\src\Valitron;
 use app\models\auth\User;
 
 class AuthController extends Controller
@@ -100,7 +99,7 @@ class AuthController extends Controller
      */
     public function loginAction() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $validator =  new Valitron\Validator($_POST);
+            $validator =  new \Valitron\Validator($_POST);
 
             $rules = [
                 'required' => [

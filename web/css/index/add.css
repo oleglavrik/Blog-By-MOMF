@@ -8,3 +8,8 @@
 #add-new-post-form label span {
     color: #761c19;
 }
+
+#content {
+    margin: 85px auto 0 auto;
+    float: none;
+}

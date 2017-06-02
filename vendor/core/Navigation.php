@@ -57,6 +57,7 @@ class Navigation extends \Twig_Extension
                     </div>
                     <button type="submit" class="btn btn-default">Login</button>
                 </form>
+                <a href="/registration" class="no-account">No account yet?</a>
                 </div>
             </li>';
         }

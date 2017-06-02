@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function registrationAction() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             // validation for registration form
-            $validator =  new Valitron\Validator($_POST);
+           $validator =  new \Valitron\Validator($_POST);
 
             $rules = [
                 'required' => [
@@ -50,12 +50,48 @@ class AuthController extends Controller
 
                     // register user
                     if($user->registerUser($data)) {
+                        /* auto auth user after registration */
+
+                        // get new user data
+                        $userObj = new User();
+                        $userData = $userObj->getUserByUserName($data['username']);
+
+                        /* create cookie hash */
+                        $guardHash = md5($userData['password']. $_SERVER['HTTP_USER_AGENT']);
+                        // set cookie auth
+                        setcookie('hash', $guardHash);
+
+                        /* set php session */
+                        $_SESSION['auth'] = [
+                            'hash' => $guardHash,
+                            'user_id' => $userData['id'],
+                            'user_name' => $userData['username']
+                        ];
+
+                        /* create session data */
+                        $sessionData['user_id'] = $userData['id'];
+                        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+                            $sessionData['ip'] = $_SERVER['HTTP_CLIENT_IP'];
+                        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                            $sessionData['ip'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                        } else {
+                            $sessionData['ip'] = $_SERVER['REMOTE_ADDR'];
+                        }
+
+                        $sessionData['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+                        $sessionData['time'] = date('Y-m-d H:i:s');
+                        $sessionData['hash'] = $guardHash;
+
+                        // set DB session
+                        $session = new Session();
+                        $session->setSession($sessionData);
+
                         // create message
                         $message = new FlashMessages();
-                        $message->setMessage('User successfully added.', 'success');
+                        $message->setMessage("Welcome " . $data['username'] . '!', 'success');
 
                         // redirect to home
-                        $this->redirectToRoute('/'); // todo change if it need
+                        $this->redirectToRoute('/');
                     }
                 }else {
                     // set validation error username is already exist
@@ -148,6 +184,10 @@ class AuthController extends Controller
                     // set DB session
                     $session = new Session();
                     $session->setSession($sessionData);
+
+                    // set welcome message
+                    $message = new FlashMessages();
+                    $message->setMessage("Welcome back " . $userData['username'] . '!', 'success');
 
                     // redirect to
                     if(isset($_SESSION['http_referrer']))
